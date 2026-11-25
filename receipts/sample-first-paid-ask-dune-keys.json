@@ -1,0 +1,103 @@
+{
+  "address": "0x1296da72914EA99a6Ac0D0c94Afba2D890dFA25b",
+  "facts": {
+    "address": "0x1296da72914EA99a6Ac0D0c94Afba2D890dFA25b",
+    "chain": "bsc",
+    "codeSize": 6526,
+    "isContract": true,
+    "owner": "0x783b594F0c3C6B8D534432E528420B3f37F942c2",
+    "proxyImplementation": null,
+    "cekAman": {
+      "safe": 1,
+      "scam": 0,
+      "proofSafe": 1,
+      "proofScam": 0,
+      "status": "safe"
+    }
+  },
+  "sourcify": {
+    "match": "exact_match"
+  },
+  "intel": {
+    "audit": {
+      "intent": "SMART_CONTRACT_AUDIT_GENERAL",
+      "ok": true,
+      "answer": {
+        "answer": "**Risk Level: High**\n\n**Main Findings:**\n\n*   **Owner-Only Drain/Withdraw:** The contract has an `owner` variable and a `withdraw` function that allows the owner to withdraw all Ether from the contract. This poses a significant risk as the owner can drain all funds deposited into the contract.\n*   **Mint-to-Self:** The contract allows the `owner` to mint tokens to themselves without any restrictions. This can lead to inflation of the token supply and potential manipulation of the token price.\n*   **No Blacklist Functionality:** The contract does not appear to have any functionality to blacklist addresses, which could be used to prevent malicious actors from interacting with the contract or claiming tokens.\n*   **No Fee-on-Transfer:** The contract does not implement any fee-on-transfer mechanism.\n*   **No Unlimited Approval Requests:** The contract does not appear to request unlimited approvals for any tokens.\n*   **Upgradeable Proxy Risks:** The contract is not deployed as an upgradeable proxy.\n\n**Detailed Analysis:**\n\nThe contract at `0x1296da72914EA99a6Ac0D0c94Afba2D890dFA25b` on BNB Smart Chain (chain id 56) is a free \"claim\"/mint contract.\n\n**Owner-Only Drain/Withdraw:**\nThe contract has an `owner` variable and a `withdraw` function. The `withdraw` function is only callable by the `owner` and allows them to withdraw all Ether accumulated in the contract. This is a critical vulnerability as it gives the owner complete control over any funds sent to the contract.\n\n```solidity\naddress public owner;\n\nconstructor() {\n    owner = msg.sender;\n}\n\nfunction withdraw() public onlyOwner {\n    payable(owner).transfer(address(this).balance);\n}\n\nmodifier onlyOwner() {\n    require(msg.sender == owner, \"Not the owner\");\n    _;\n}\n```\n\n**Mint-to-Self:**\nThe contract has a `mint` function that allows the `owner` to mint tokens to any specified address. While not explicitly \"mint-to-self\" in the sense of automatically minting to the owner, the owner has the ability to mint tokens to themselves or any other address they control without any apparent limits or conditions.\n\n```solidity\nfunction mint(address _to, uint256 _amount) public onlyOwner {\n    _mint(_to, _amount);\n}\n```\n\n**Blacklist:**\nThere is no functionality within the contract to blacklist addresses. This means that any address, regardless of its reputation or behavior, can interact with the contract and claim tokens.\n\n**Fee-on-Transfer:**\nThe contract does not implement any logic for charging fees on token transfers.\n\n**Unlimited Approval",
+        "intent": "SMART_CONTRACT_AUDIT_GENERAL",
+        "miner": "openai (id openai)",
+        "result_shape": "raw",
+        "cost_usd": 0,
+        "payment": {
+          "rail": "escrow",
+          "billed_usd": 0.1,
+          "authorized_usd": 0.1
+        },
+        "warnings": [
+          "no miner could answer this, so it was answered by a general model"
+        ]
+      },
+      "cost_usd": 0
+    },
+    "holders": {
+      "intent": "TOKEN_HOLDER_COUNT_GENERAL",
+      "ok": true,
+      "answer": {
+        "answer": {
+          "token": "0x1296da72914EA99a6Ac0D0c94Afba2D890dFA25b",
+          "chain": "bsc",
+          "holders_count": null,
+          "token_symbol": null
+        },
+        "intent": "TOKEN_HOLDER_COUNT_GENERAL",
+        "miner": "PREFLIGHT Infrastructure Signals (id 20260828)",
+        "result_shape": "intent",
+        "field_status": {
+          "token": "ok",
+          "chain": "ok",
+          "holders_count": "missing",
+          "token_symbol": "missing"
+        },
+        "cost_usd": 0.01,
+        "payment": {
+          "rail": "escrow",
+          "billed_usd": 0.01,
+          "authorized_usd": 0.1,
+          "receipt": {
+            "receipt_hash": "0xe7ada1c462352631bf3bca9de738b098d9a6ab18768149348a218161c9f8fefe",
+            "rail": "escrow",
+            "payer": "0x0330251f9d2bbe63eb61fd0f592a50dfe24143a3",
+            "miner": "5311",
+            "intent": "TOKEN_HOLDER_COUNT_GENERAL",
+            "amount_uusdc": "10000",
+            "epoch_id": 53,
+            "settlement": "epoch",
+            "chain": "telegraph",
+            "timestamp": 1795589564
+          }
+        },
+        "warnings": [
+          "The response does not include: Number of distinct addresses holding the token",
+          "The response does not include: The token's symbol"
+        ]
+      },
+      "cost_usd": 0.01
+    }
+  },
+  "decision": {
+    "verdict": "BLOCK",
+    "reasons": [
+      "CAUTION: has an owner (0x783b594F0c3C6B8D534432E528420B3f37F942c2) with admin powers — check what they can do",
+      "BLOCK: paid smart-contract audit intelligence rates it high risk"
+    ],
+    "evidence": [
+      "bytecode 6526 bytes on BSC",
+      "Sourcify: exact_match",
+      "Cek Aman community: 1 SAFE (1 proof-backed), 0 SCAM (0 proof-backed)",
+      "Telegraph SMART_CONTRACT_AUDIT_GENERAL: risk high",
+      "Telegraph TOKEN_HOLDER_COUNT_GENERAL: unknown holders"
+    ],
+    "cost_usd": 0.01,
+    "asks": 2
+  }
+}
