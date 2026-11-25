@@ -26,7 +26,7 @@ You need Node.js 20 or newer.
 
 ```bash
 npm install
-npm test                                   # 8 unit tests, no network needed
+npm test                                   # 9 unit tests, no network needed
 node bin/cek-aman-intel.js 0x1296da72914EA99a6Ac0D0c94Afba2D890dFA25b
 node bin/cek-aman-intel.js <address> --url https://claim-site.example --json
 node bin/cek-aman-intel.js <address> --no-paid   # free checks only

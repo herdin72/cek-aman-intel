@@ -1,0 +1,70 @@
+{
+  "address": "0x156482AD3F0eebD8E3F70d494ebD1dA3F738f5Ba",
+  "facts": {
+    "address": "0x156482AD3F0eebD8E3F70d494ebD1dA3F738f5Ba",
+    "chain": "bsc",
+    "codeSize": 18736,
+    "isContract": true,
+    "owner": "0xB42C7313f40aCD7c08c24CD5FfaC898C85dE8CC6",
+    "proxyImplementation": null,
+    "cekAman": {
+      "safe": 1,
+      "scam": 0,
+      "proofSafe": 1,
+      "proofScam": 0,
+      "status": "safe"
+    }
+  },
+  "sourcify": {
+    "match": "exact_match"
+  },
+  "intel": {
+    "audit": {
+      "intent": "SMART_CONTRACT_AUDIT_GENERAL",
+      "ok": false,
+      "answer": {
+        "status": 402,
+        "error": "payment required",
+        "reason": "insufficient escrow for delivery: unbilled=0 μUSDC + price=100000 μUSDC > balance=0 μUSDC",
+        "hint": "Payment from escrow refused (the node says: insufficient escrow for delivery: unbilled=0 μUSDC + price=100000 μUSDC > balance=0 μUSDC), and nothing was charged. An ask holds its whole budget (TELEGRAPH_MAX_BUDGET_USDC) while it runs. telegraph_account shows the balance; the user fixes it by running `npx -y @telegraphprotocol/telegraph-protocol-mcp fund` in a terminal and confirming the amount.",
+        "payment": {
+          "rail": "escrow",
+          "authorized_usd": 0.1,
+          "escrow": "insufficient escrow for delivery: unbilled=0 μUSDC + price=100000 μUSDC > balance=0 μUSDC"
+        }
+      },
+      "cost_usd": 0
+    },
+    "holders": {
+      "intent": "TOKEN_HOLDER_COUNT_GENERAL",
+      "ok": false,
+      "answer": {
+        "status": 402,
+        "error": "payment required",
+        "reason": "insufficient escrow for delivery: unbilled=0 μUSDC + price=100000 μUSDC > balance=0 μUSDC",
+        "hint": "Payment from escrow refused (the node says: insufficient escrow for delivery: unbilled=0 μUSDC + price=100000 μUSDC > balance=0 μUSDC), and nothing was charged. An ask holds its whole budget (TELEGRAPH_MAX_BUDGET_USDC) while it runs. telegraph_account shows the balance; the user fixes it by running `npx -y @telegraphprotocol/telegraph-protocol-mcp fund` in a terminal and confirming the amount.",
+        "payment": {
+          "rail": "escrow",
+          "authorized_usd": 0.1,
+          "escrow": "insufficient escrow for delivery: unbilled=0 μUSDC + price=100000 μUSDC > balance=0 μUSDC"
+        }
+      },
+      "cost_usd": 0
+    }
+  },
+  "decision": {
+    "verdict": "CAUTION",
+    "reasons": [
+      "CAUTION: has an owner (0xB42C7313f40aCD7c08c24CD5FfaC898C85dE8CC6) with admin powers — check what they can do",
+      "CAUTION: no paid Telegraph intelligence could be bought, so this memo uses free checks only and will not say SAFE",
+      "note: audit ask failed ({\"status\":402,\"error\":\"payment required\",\"reason\":\"insufficient escrow for delivery: unbilled=0 μUSDC + price=100000 μUSDC > balance=0 μUSDC\",\"hint\":\"Payment fr)"
+    ],
+    "evidence": [
+      "bytecode 18736 bytes on BSC",
+      "Sourcify: exact_match",
+      "Cek Aman community: 1 SAFE (1 proof-backed), 0 SCAM (0 proof-backed)"
+    ],
+    "cost_usd": 0,
+    "asks": 2
+  }
+}

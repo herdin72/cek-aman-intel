@@ -1,0 +1,104 @@
+{
+  "address": "0x1296da72914EA99a6Ac0D0c94Afba2D890dFA25b",
+  "facts": {
+    "address": "0x1296da72914EA99a6Ac0D0c94Afba2D890dFA25b",
+    "chain": "bsc",
+    "codeSize": 6526,
+    "isContract": true,
+    "owner": "0x783b594F0c3C6B8D534432E528420B3f37F942c2",
+    "proxyImplementation": null,
+    "cekAman": {
+      "safe": 1,
+      "scam": 0,
+      "proofSafe": 1,
+      "proofScam": 0,
+      "status": "safe"
+    }
+  },
+  "sourcify": {
+    "match": "exact_match"
+  },
+  "intel": {
+    "audit": {
+      "intent": "SMART_CONTRACT_AUDIT_GENERAL",
+      "ok": true,
+      "answer": {
+        "answer": "**Risk Level: High**\n\n**Main Findings:**\n\n*   **Owner-Only Drain/Withdraw:** The contract has an `owner` variable and a `withdraw` function that allows the owner to withdraw all BNB from the contract. This poses a significant risk as the owner can drain all funds at any time.\n*   **Mint-to-Self:** The `claim` function allows anyone to mint tokens to themselves. While this is typical for a free claim contract, it means the owner has no control over the token supply if they are the only ones who can mint. However, in this specific contract, the `claim` function is the only minting mechanism, and it doesn't appear to be restricted to the owner.\n*   **No Blacklist Functionality:** There is no functionality to blacklist or pause specific addresses from claiming or interacting with the contract.\n*   **No Fee-on-Transfer:** The contract does not implement any fee-on-transfer mechanism.\n*   **No Unlimited Approval Requests:** The contract does not appear to request unlimited approvals for any token.\n*   **No Upgradeable Proxy:** The contract is not an upgradeable proxy, meaning its logic is fixed and cannot be changed after deployment.\n\n**Detailed Analysis:**\n\nThe contract is a simple free claim contract where users can call the `claim` function to receive a certain amount of tokens. The `owner` of the contract has the ability to withdraw all BNB accumulated in the contract using the `withdraw` function. This is a critical vulnerability as it allows the owner to steal all deposited funds.\n\nThe `claim` function allows anyone to mint tokens to themselves. There are no checks to limit the number of claims per address or to restrict claiming to specific whitelisted addresses.\n\nThere are no functions for pausing the contract, blacklisting addresses, or implementing any form of fee-on-transfer. The contract is also not an upgradeable proxy, so its functionality cannot be altered after deployment.\n\n**Recommendations:**\n\n*   **For users interacting with this contract:** Be aware that the owner can withdraw all BNB from the contract at any time. Do not deposit any BNB into this contract.\n*   **For developers:** If you are developing a similar contract, consider implementing mechanisms to prevent owner-only drains, such as requiring multiple signatures for withdrawals or implementing timelocks. If the intention is for the owner to control the token supply, the minting function should be restricted to the owner.",
+        "intent": "SMART_CONTRACT_AUDIT_GENERAL",
+        "miner": "openai (id openai)",
+        "result_shape": "raw",
+        "cost_usd": 0,
+        "payment": {
+          "rail": "escrow",
+          "billed_usd": 0.1,
+          "authorized_usd": 0.1
+        },
+        "warnings": [
+          "no miner could answer this, so it was answered by a general model"
+        ]
+      },
+      "cost_usd": 0.1
+    },
+    "holders": {
+      "intent": "TOKEN_HOLDER_COUNT_GENERAL",
+      "ok": true,
+      "answer": {
+        "answer": {
+          "token": "0x1296da72914EA99a6Ac0D0c94Afba2D890dFA25b",
+          "chain": "bsc",
+          "holders_count": null,
+          "token_symbol": null
+        },
+        "intent": "TOKEN_HOLDER_COUNT_GENERAL",
+        "miner": "PREFLIGHT Infrastructure Signals (id 20260828)",
+        "result_shape": "intent",
+        "field_status": {
+          "token": "ok",
+          "chain": "ok",
+          "holders_count": "missing",
+          "token_symbol": "missing"
+        },
+        "cost_usd": 0.01,
+        "payment": {
+          "rail": "escrow",
+          "billed_usd": 0.01,
+          "authorized_usd": 0.1,
+          "receipt": {
+            "receipt_hash": "0x5ca5ecf05aa6ca106ae695b393c0aa6acc1c5a6fccebe75bb0f1a82732d92481",
+            "rail": "escrow",
+            "payer": "0x0330251f9d2bbe63eb61fd0f592a50dfe24143a3",
+            "miner": "5311",
+            "intent": "TOKEN_HOLDER_COUNT_GENERAL",
+            "amount_uusdc": "10000",
+            "epoch_id": 53,
+            "settlement": "epoch",
+            "chain": "telegraph",
+            "timestamp": 1795592443
+          }
+        },
+        "warnings": [
+          "The response does not include: Number of distinct addresses holding the token",
+          "The response does not include: The token's symbol"
+        ]
+      },
+      "cost_usd": 0.01
+    }
+  },
+  "decision": {
+    "verdict": "CAUTION",
+    "reasons": [
+      "CAUTION: has an owner (0x783b594F0c3C6B8D534432E528420B3f37F942c2) with admin powers — check what they can do",
+      "CAUTION: audit answer (general model, low confidence) says high risk — check the verified source yourself"
+    ],
+    "evidence": [
+      "bytecode 6526 bytes on BSC",
+      "Sourcify: exact_match",
+      "Cek Aman community: 1 SAFE (1 proof-backed), 0 SCAM (0 proof-backed)",
+      "Telegraph SMART_CONTRACT_AUDIT_GENERAL: risk high",
+      "note: no specialist miner answered the audit ask; a general model answered, so it is treated as low-confidence (can raise CAUTION, never BLOCK)",
+      "Telegraph TOKEN_HOLDER_COUNT_GENERAL: unknown holders"
+    ],
+    "cost_usd": 0.11,
+    "asks": 2
+  }
+}
